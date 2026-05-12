@@ -7,10 +7,20 @@
         mc:Ignorable="d"
         Title="Icarus Drone Service Application"
         Height="650"
-        Width="1416">
+        Width="1530"
+        ResizeMode="NoResize">
 
     <Grid Background="#FFB7A7A7">
 
+        <Label Content="Icarus Drone Servicing"
+               HorizontalAlignment="Center"
+               VerticalAlignment="Top"
+               Margin="0,15,0,0"
+               FontSize="18"
+               FontWeight="Bold"
+               Foreground="#FF651E1E"/>
+
+        <!-- Service Entry Panel -->
         <Border HorizontalAlignment="Left"
                 VerticalAlignment="Top"
                 Width="350"
@@ -78,20 +88,119 @@
                         Background="#FFCC8B7C"/>
 
             </StackPanel>
-
         </Border>
-        <Label Content="Icarus Drone Servicing" HorizontalAlignment="Left" Margin="537,22,0,0" VerticalAlignment="Top" FontSize="18" FontWeight="Bold"/>
-        <Border HorizontalAlignment="Left" VerticalAlignment="Top" Width="350" Height="560" Margin="400,59,0,0" Background="#FFB7A7A7" BorderBrush="Black" BorderThickness="1" Padding="10">
+
+        <!-- Service Queue Panel -->
+        <Border HorizontalAlignment="Left"
+                VerticalAlignment="Top"
+                Width="350"
+                Height="560"
+                Margin="400,59,0,0"
+                Background="#FFB7A7A7"
+                BorderBrush="Black"
+                BorderThickness="1"
+                Padding="10">
+
             <StackPanel Orientation="Vertical">
-                <Label Content="Service Queue" FontSize="14" FontWeight="Bold"/>
-                <ComboBox x:Name="FilterCB" Height="26" Margin="0,0,0,10" SelectedIndex="0">
-                    <ComboBoxItem Content="All Services"/>
+
+                <Label Content="Service Queue"
+                       FontSize="14"
+                       FontWeight="Bold"/>
+
+                <ComboBox x:Name="FilterCB"
+                          Height="26"
+                          Margin="0,0,0,10"
+                          SelectedIndex="0">
                     <ComboBoxItem Content="Regular Service"/>
                     <ComboBoxItem Content="Express Service"/>
                 </ComboBox>
 
-                <ListBox x:Name="ServiceQueueLB" Height="500"/>
+                <ListBox x:Name="ServiceQueueLB"
+                         Height="405"/>
+
+                <Button x:Name="MoveToFinishedBTN"
+                        Content="Move to Finished"
+                        Height="40"
+                        Margin="0,15,0,0"
+                        Background="#FF95CC7C"/>
+
             </StackPanel>
         </Border>
+
+        <!-- Selected Service Details Panel -->
+        <Border HorizontalAlignment="Left"
+                VerticalAlignment="Top"
+                Width="350"
+                Height="560"
+                Margin="777,59,0,0"
+                Background="#FFB7A7A7"
+                BorderBrush="Black"
+                BorderThickness="1"
+                Padding="10">
+
+            <StackPanel Orientation="Vertical">
+
+                <Label Content="Selected Service Details"
+                       FontSize="14"
+                       FontWeight="Bold"/>
+
+                <TextBlock x:Name="SelectedTagText"
+                           FontSize="16"
+                           Margin="0,15,0,0"
+                           Text="Service Tag:" />
+
+                <TextBlock x:Name="SelectedClientText"
+                           FontSize="16"
+                           Margin="0,10,0,0"
+                           Text="Client Name:" />
+
+                <TextBlock x:Name="SelectedModelText"
+                           FontSize="16"
+                           Margin="0,10,0,0"
+                           Text="Drone Model:" />
+
+                <TextBlock x:Name="SelectedProblemText"
+                           FontSize="16"
+                           Margin="0,10,0,0"
+                           Text="Service Problem:"
+                           TextWrapping="Wrap" />
+
+                <TextBlock x:Name="SelectedCostText"
+                           FontSize="16"
+                           Margin="0,10,0,0"
+                           Text="Service Cost:" />
+
+            </StackPanel>
+        </Border>
+
+        <!-- Completed Services Panel -->
+        <Border HorizontalAlignment="Left"
+                VerticalAlignment="Top"
+                Width="350"
+                Height="560"
+                Margin="1154,59,0,0"
+                Background="#FFB7A7A7"
+                BorderBrush="Black"
+                BorderThickness="1"
+                Padding="10">
+
+            <StackPanel Orientation="Vertical">
+
+                <Label Content="Completed Services"
+                       FontSize="14"
+                       FontWeight="Bold"/>
+
+                <ListBox x:Name="FinishedServicesLB"
+                         Height="445"/>
+
+                <Button x:Name="MarkCompletedBTN"
+                        Content="Mark as Completed"
+                        Height="40"
+                        Margin="0,15,0,0"
+                        Background="#FF95CC7C"/>
+
+            </StackPanel>
+        </Border>
+
     </Grid>
 </Window>
