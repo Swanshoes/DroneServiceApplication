@@ -1,0 +1,97 @@
+﻿<Window x:Class="DroneServiceApplication.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:DroneServiceApplication"
+        mc:Ignorable="d"
+        Title="Icarus Drone Service Application"
+        Height="650"
+        Width="1416">
+
+    <Grid Background="#FFB7A7A7">
+
+        <Border HorizontalAlignment="Left"
+                VerticalAlignment="Top"
+                Width="350"
+                Height="560"
+                Margin="23,59,0,0"
+                Background="#FFB7A7A7"
+                BorderBrush="Black"
+                BorderThickness="1"
+                Padding="10">
+
+            <StackPanel Orientation="Vertical">
+
+                <Label Content="Enter Service Details"
+                       FontSize="14"
+                       FontWeight="Bold"/>
+
+                <Label Content="Client Name"/>
+                <TextBox x:Name="ClientNameTB"
+                         Text="Enter client name"
+                         Height="25"
+                         FontSize="16"
+                         Foreground="#FF989090"/>
+
+                <Label Content="Drone Model"/>
+                <TextBox x:Name="DroneModelTB"
+                         Text="Enter model no."
+                         Height="25"
+                         FontSize="16"
+                         Foreground="#FF989090"/>
+
+                <Label Content="Service Problem"/>
+                <TextBox x:Name="ServiceProblemTB"
+                         Text="Enter description of problem."
+                         Height="119"
+                         FontSize="16"
+                         Foreground="#FF989090"
+                         TextWrapping="Wrap"
+                         AcceptsReturn="True"/>
+
+                <Label Content="Service Price"/>
+                <TextBox x:Name="ServicePriceTB"
+                         Text="Enter price."
+                         Height="25"
+                         FontSize="16"
+                         Foreground="#FF989090"/>
+
+                <Label Content="Service Type"/>
+                <ComboBox x:Name="ServiceTypeCB"
+                          Height="26"
+                          SelectedIndex="0">
+                    <ComboBoxItem Content="Regular Service"/>
+                    <ComboBoxItem Content="Express Service"/>
+                </ComboBox>
+
+                <Button x:Name="AddToQueueBTN"
+                        Content="Add to Queue"
+                        Height="40"
+                        Margin="0,25,0,0"
+                        Background="#FF95CC7C"/>
+
+                <Button x:Name="ClearInputsBTN"
+                        Content="Clear Inputs"
+                        Height="40"
+                        Margin="0,10,0,0"
+                        Background="#FFCC8B7C"/>
+
+            </StackPanel>
+
+        </Border>
+        <Label Content="Icarus Drone Servicing" HorizontalAlignment="Left" Margin="537,22,0,0" VerticalAlignment="Top" FontSize="18" FontWeight="Bold"/>
+        <Border HorizontalAlignment="Left" VerticalAlignment="Top" Width="350" Height="560" Margin="400,59,0,0" Background="#FFB7A7A7" BorderBrush="Black" BorderThickness="1" Padding="10">
+            <StackPanel Orientation="Vertical">
+                <Label Content="Service Queue" FontSize="14" FontWeight="Bold"/>
+                <ComboBox x:Name="FilterCB" Height="26" Margin="0,0,0,10" SelectedIndex="0">
+                    <ComboBoxItem Content="All Services"/>
+                    <ComboBoxItem Content="Regular Service"/>
+                    <ComboBoxItem Content="Express Service"/>
+                </ComboBox>
+
+                <ListBox x:Name="ServiceQueueLB" Height="500"/>
+            </StackPanel>
+        </Border>
+    </Grid>
+</Window>
