@@ -22,153 +22,172 @@
 
         <!-- Service Entry Panel -->
         <Border HorizontalAlignment="Left"
-                VerticalAlignment="Top"
-                Width="350"
-                Height="560"
-                Margin="23,59,0,0"
-                Background="#FFB7A7A7"
-                BorderBrush="Black"
-                BorderThickness="1"
-                Padding="10">
+        VerticalAlignment="Top"
+        Width="350"
+        Height="560"
+        Margin="23,59,0,0"
+        Background="#FFB7A7A7"
+        BorderBrush="Black"
+        BorderThickness="1"
+        Padding="10">
 
             <StackPanel Orientation="Vertical">
 
                 <Label Content="Enter Service Details"
-                       FontSize="14"
-                       FontWeight="Bold"/>
+               FontSize="14"
+               FontWeight="Bold"/>
 
                 <Label Content="Client Name"/>
                 <TextBox x:Name="ClientNameTB"
-                         Text="Enter client name"
-                         Height="25"
-                         FontSize="16"
-                         Foreground="#FF989090"/>
+                 Height="25"
+                 FontSize="16"
+                 Foreground="#FF989090"/>
 
                 <Label Content="Drone Model"/>
                 <TextBox x:Name="DroneModelTB"
-                         Text="Enter model no."
-                         Height="25"
-                         FontSize="16"
-                         Foreground="#FF989090"/>
+                 Height="25"
+                 FontSize="16"
+                 Foreground="#FF989090"/>
 
                 <Label Content="Service Problem"/>
                 <TextBox x:Name="ServiceProblemTB"
-                         Text="Enter description of problem."
-                         Height="119"
-                         FontSize="16"
-                         Foreground="#FF989090"
-                         TextWrapping="Wrap"
-                         AcceptsReturn="True"/>
+                 Height="119"
+                 FontSize="16"
+                 Foreground="#FF989090"
+                 TextWrapping="Wrap"
+                 AcceptsReturn="True"/>
 
                 <Label Content="Service Price"/>
                 <TextBox x:Name="ServicePriceTB"
-                         Text="Enter price."
-                         Height="25"
-                         FontSize="16"
-                         Foreground="#FF989090"/>
+                 Height="25"
+                 FontSize="16"
+                 Foreground="#FF989090"/>
 
                 <Label Content="Service Type"/>
-                <ComboBox x:Name="ServiceTypeCB"
-                          Height="26"
-                          SelectedIndex="0">
-                    <ComboBoxItem Content="Regular Service"/>
-                    <ComboBoxItem Content="Express Service"/>
-                </ComboBox>
+
+                <StackPanel Orientation="Horizontal"
+                    Margin="5,0,0,0">
+                    <RadioButton x:Name="RegularServiceRB"
+                         Content="Regular"
+                         GroupName="ServiceType"
+                         IsChecked="True"
+                         Margin="0,0,30,0"/>
+
+                    <RadioButton x:Name="ExpressServiceRB"
+                         Content="Express"
+                         GroupName="ServiceType"/>
+                </StackPanel>
 
                 <Button x:Name="AddToQueueBTN"
-                        Content="Add to Queue"
-                        Height="40"
-                        Margin="0,25,0,0"
-                        Background="#FF95CC7C"/>
+                Content="Add to Queue"
+                Height="40"
+                Margin="0,25,0,0"
+                Background="#FF95CC7C"/>
 
                 <Button x:Name="ClearInputsBTN"
-                        Content="Clear Inputs"
-                        Height="40"
-                        Margin="0,10,0,0"
-                        Background="#FFCC8B7C"/>
+                Content="Clear Inputs"
+                Height="40"
+                Margin="0,10,0,0"
+                Background="#FFCC8B7C"/>
 
             </StackPanel>
         </Border>
 
         <!-- Service Queue Panel -->
-        <Border HorizontalAlignment="Left"
-                VerticalAlignment="Top"
-                Width="350"
-                Height="560"
-                Margin="400,59,0,0"
-                Background="#FFB7A7A7"
-                BorderBrush="Black"
-                BorderThickness="1"
-                Padding="10">
+        <Border HorizontalAlignment="Center"
+        VerticalAlignment="Top"
+        Width="730"
+        Height="543"
+        Margin="0,59,0,0"
+        Background="#FFB7A7A7"
+        BorderBrush="Black"
+        BorderThickness="1"
+        Padding="10">
 
             <StackPanel Orientation="Vertical">
 
-                <Label Content="Service Queue"
-                       FontSize="14"
-                       FontWeight="Bold"/>
+                <Label Content="Service Queues"
+               FontSize="14"
+               FontWeight="Bold"
+               Height="27"/>
 
-                <ComboBox x:Name="FilterCB"
-                          Height="26"
-                          Margin="0,0,0,10"
-                          SelectedIndex="0">
-                    <ComboBoxItem Content="Regular Service"/>
-                    <ComboBoxItem Content="Express Service"/>
-                </ComboBox>
+                <!-- Regular Service Queue -->
+                <Label Content="Regular Service Queue"
+               FontSize="13"
+               FontWeight="SemiBold"
+               Margin="0,5,0,0"/>
 
-                <ListBox x:Name="ServiceQueueLB"
-                         Height="405"/>
+                <ListView x:Name="RegularQueueLV"
+                  Height="170"
+                  Margin="0,0,0,8">
+                    <ListView.View>
+                        <GridView>
+                            <GridViewColumn Header="Tag"
+                                    DisplayMemberBinding="{Binding ServiceTag}"
+                                    Width="80"/>
 
-                <Button x:Name="MoveToFinishedBTN"
-                        Content="Move to Finished"
-                        Height="40"
-                        Margin="0,15,0,0"
-                        Background="#FF95CC7C"/>
+                            <GridViewColumn Header="Client"
+                                    DisplayMemberBinding="{Binding ClientName}"
+                                    Width="120"/>
 
-            </StackPanel>
-        </Border>
+                            <GridViewColumn Header="Model"
+                                    DisplayMemberBinding="{Binding DroneModel}"
+                                    Width="120"/>
 
-        <!-- Selected Service Details Panel -->
-        <Border HorizontalAlignment="Left"
-                VerticalAlignment="Top"
-                Width="350"
-                Height="560"
-                Margin="777,59,0,0"
-                Background="#FFB7A7A7"
-                BorderBrush="Black"
-                BorderThickness="1"
-                Padding="10">
+                            <GridViewColumn Header="Problem"
+                                    DisplayMemberBinding="{Binding ServiceProblem}"
+                                    Width="260"/>
 
-            <StackPanel Orientation="Vertical">
+                            <GridViewColumn Header="Cost"
+                                    DisplayMemberBinding="{Binding ServiceCost}"
+                                    Width="90"/>
+                        </GridView>
+                    </ListView.View>
+                </ListView>
 
-                <Label Content="Selected Service Details"
-                       FontSize="14"
-                       FontWeight="Bold"/>
+                <Button x:Name="DequeueRegularBTN"
+                Content="Dequeue Regular Service"
+                Height="35"
+                Margin="0,0,0,10"
+                Background="#FF95CC7C"/>
 
-                <TextBlock x:Name="SelectedTagText"
-                           FontSize="16"
-                           Margin="0,15,0,0"
-                           Text="Service Tag:" />
+                <!-- Express Service Queue -->
+                <Label Content="Express Service Queue"
+               FontSize="13"
+               FontWeight="SemiBold"/>
 
-                <TextBlock x:Name="SelectedClientText"
-                           FontSize="16"
-                           Margin="0,10,0,0"
-                           Text="Client Name:" />
+                <ListView x:Name="ExpressQueueLV"
+                  Height="170"
+                  Margin="0,0,0,8">
+                    <ListView.View>
+                        <GridView>
+                            <GridViewColumn Header="Tag"
+                                    DisplayMemberBinding="{Binding ServiceTag}"
+                                    Width="80"/>
 
-                <TextBlock x:Name="SelectedModelText"
-                           FontSize="16"
-                           Margin="0,10,0,0"
-                           Text="Drone Model:" />
+                            <GridViewColumn Header="Client"
+                                    DisplayMemberBinding="{Binding ClientName}"
+                                    Width="120"/>
 
-                <TextBlock x:Name="SelectedProblemText"
-                           FontSize="16"
-                           Margin="0,10,0,0"
-                           Text="Service Problem:"
-                           TextWrapping="Wrap" />
+                            <GridViewColumn Header="Model"
+                                    DisplayMemberBinding="{Binding DroneModel}"
+                                    Width="120"/>
 
-                <TextBlock x:Name="SelectedCostText"
-                           FontSize="16"
-                           Margin="0,10,0,0"
-                           Text="Service Cost:" />
+                            <GridViewColumn Header="Problem"
+                                    DisplayMemberBinding="{Binding ServiceProblem}"
+                                    Width="260"/>
+
+                            <GridViewColumn Header="Cost"
+                                    DisplayMemberBinding="{Binding ServiceCost}"
+                                    Width="90"/>
+                        </GridView>
+                    </ListView.View>
+                </ListView>
+
+                <Button x:Name="DequeueExpressBTN"
+                Content="Dequeue Express Service"
+                Height="35"
+                Background="#FF95CC7C"/>
 
             </StackPanel>
         </Border>
