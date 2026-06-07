@@ -216,7 +216,7 @@
                         Content="Mark as Completed"
                         Height="40"
                         Margin="0,15,0,0"
-                        Background="#FF95CC7C"/>
+                        Background="#FF95CC7C" Click="MarkCompletedBTN_Click"/>
 
             </StackPanel>
         </Border>

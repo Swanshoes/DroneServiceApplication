@@ -40,45 +40,7 @@ namespace DroneServiceApplication
 
         private void AddToQueueBTN_Click(object sender, RoutedEventArgs e)
         {
-            if (ClientNameTB.Text == "" || DroneModelTB.Text == "" || ServiceProblemTB.Text == "" || ServiceCostTB.Text == "")
-            {
-                MessageBox.Show("Please fill in all fields before adding to the queue.", "Input Error", MessageBoxButton.OK, MessageBoxImage.Error);
-                return;
-            }
-
-            if (!decimal.TryParse(ServiceCostTB.Text, out decimal serviceCost))
-            {
-                MessageBox.Show("Please enter a valid service cost.", "Input Error", MessageBoxButton.OK, MessageBoxImage.Error);
-                return;
-            }
-
-            if (ExpressServiceRB.IsChecked == true)
-            {
-                serviceCost = serviceCost * 1.15m;
-            }
-
-            Drone newDrone = new Drone
-            {
-                ClientName = ClientNameTB.Text,
-                DroneModel = DroneModelTB.Text,
-                ServiceProblem = ServiceProblemTB.Text,
-                ServiceCost = serviceCost,
-                ServiceTag = _currentServiceTag
-            };
-
-            if (RegularServiceRB.IsChecked == true)
-            {
-                _regularDroneQueue.Enqueue(newDrone);
-                RegularQueueLV.Items.Add(newDrone);
-            }
-            else if (ExpressServiceRB.IsChecked == true)
-            {
-                _expressDroneQueue.Enqueue(newDrone);
-                ExpressQueueLV.Items.Add(newDrone);
-            }
-
-            IncrementServiceTag();
-            ClearTextBoxes();
+            AddNewItem();
         }
 
         private void ClearTextBoxes()
@@ -122,6 +84,85 @@ namespace DroneServiceApplication
             ExpressQueueLV.Items.RemoveAt(0);
             MessageBox.Show($"Drone with Service Tag {nextDrone.ServiceTag} has been moved to completed services.", "Drone Completed", MessageBoxButton.OK, MessageBoxImage.Information);
             FinishedServicesLB.Items.Add(nextDrone.Display());
+        }
+
+        // Returns the selected priority from the service priority radio buttons.
+        private string GetServicePriority()
+        {
+            if (RegularServiceRB.IsChecked == true)
+            {
+                return "Regular";
+            }
+            else
+            {
+                return "Express";
+            }
+        }
+
+        private void AddNewItem()
+        {
+            if (ClientNameTB.Text == "" || DroneModelTB.Text == "" || ServiceProblemTB.Text == "" || ServiceCostTB.Text == "")
+            {
+                MessageBox.Show("Please fill in all fields before adding to the queue.", "Input Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
+
+            if (!decimal.TryParse(ServiceCostTB.Text, out decimal serviceCost))
+            {
+                MessageBox.Show("Please enter a valid service cost.", "Input Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
+
+            string servicePriority = GetServicePriority();
+
+            if (servicePriority == "Express")
+            {
+                serviceCost = serviceCost * 1.15m;
+            }
+
+            Drone newDrone = new Drone
+            {
+                ClientName = ClientNameTB.Text,
+                DroneModel = DroneModelTB.Text,
+                ServiceProblem = ServiceProblemTB.Text,
+                ServiceCost = serviceCost,
+                ServiceTag = _currentServiceTag
+            };
+
+            if (RegularServiceRB.IsChecked == true)
+            {
+                _regularDroneQueue.Enqueue(newDrone);
+                RegularQueueLV.Items.Add(newDrone);
+            }
+            else if (ExpressServiceRB.IsChecked == true)
+            {
+                _expressDroneQueue.Enqueue(newDrone);
+                ExpressQueueLV.Items.Add(newDrone);
+            }
+
+            IncrementServiceTag();
+            ClearTextBoxes();
+        }
+
+        private void MarkCompletedBTN_Click(object sender, RoutedEventArgs e)
+        {
+            if (_finishedList.Count == 0)
+            {
+                MessageBox.Show("No completed services to mark.", "No Completed Services", MessageBoxButton.OK, MessageBoxImage.Information);
+                return;
+            }
+
+            if (FinishedServicesLB.SelectedIndex == -1)
+            {
+                MessageBox.Show("Please select a completed service to mark.", "Selection Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
+
+            int selectedIndex = FinishedServicesLB.SelectedIndex;   
+            Drone selectedDrone = _finishedList[selectedIndex];
+            _finishedList.RemoveAt(selectedIndex);
+            FinishedServicesLB.Items.RemoveAt(selectedIndex);
+            MessageBox.Show($"Drone with Service Tag {selectedDrone.ServiceTag} has been marked as completed.", "Drone Completed", MessageBoxButton.OK, MessageBoxImage.Information);
         }
     }
 }
