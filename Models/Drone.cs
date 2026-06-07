@@ -61,6 +61,14 @@ namespace DroneServiceApplication.Models
             }
         }
 
+        public string ServiceCostDisplay
+        {
+            get
+            {
+                return serviceCost.ToString("C2");
+            }
+        }
+
         public int ServiceTag
         {
             get
