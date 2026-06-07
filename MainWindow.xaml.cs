@@ -1,5 +1,6 @@
 ﻿using DroneServiceApplication.Models;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
@@ -18,8 +19,8 @@ namespace DroneServiceApplication
     public partial class MainWindow : Window
     {
         private int _currentServiceTag = 100; // Starting point for service tags
-        private Queue<Drone> _regularDroneQueue = new Queue<Drone>(); // Queue to hold the drone service requests
-        private Queue<Drone> _expressDroneQueue = new Queue<Drone>(); // Queue to hold the drone service requests
+        private Queue<Drone> _RegularService = new Queue<Drone>(); // Queue to hold the drone service requests
+        private Queue<Drone> _ExpressService = new Queue<Drone>(); // Queue to hold the drone service requests
         private List<Drone> _finishedList = new List<Drone>(); // List to hold drones that are awaiting pickup
         public MainWindow()
         {
@@ -58,13 +59,13 @@ namespace DroneServiceApplication
 
         private void DequeueRegularBTN_Click(object sender, RoutedEventArgs e)
         {
-            if (_regularDroneQueue.Count == 0)
+            if (_RegularService.Count == 0)
             {
                 MessageBox.Show("No drones in the regular service queue.", "Queue Empty", MessageBoxButton.OK, MessageBoxImage.Information);
                 return;
             }
 
-            Drone nextDrone = _regularDroneQueue.Dequeue();
+            Drone nextDrone = _RegularService.Dequeue();
             _finishedList.Add(nextDrone);
             RegularQueueLV.Items.RemoveAt(0);
             MessageBox.Show($"Drone with Service Tag {nextDrone.ServiceTag} has been moved to completed services.", "Drone Completed", MessageBoxButton.OK, MessageBoxImage.Information);
@@ -73,13 +74,13 @@ namespace DroneServiceApplication
 
         private void DequeueExpressBTN_Click(object sender, RoutedEventArgs e)
         {
-            if (_expressDroneQueue.Count == 0)
+            if (_ExpressService.Count == 0)
             {
                 MessageBox.Show("No drones in the express service queue.", "Queue Empty", MessageBoxButton.OK, MessageBoxImage.Information);
                 return;
             }
 
-            Drone nextDrone = _expressDroneQueue.Dequeue();
+            Drone nextDrone = _ExpressService.Dequeue();
             _finishedList.Add(nextDrone);
             ExpressQueueLV.Items.RemoveAt(0);
             MessageBox.Show($"Drone with Service Tag {nextDrone.ServiceTag} has been moved to completed services.", "Drone Completed", MessageBoxButton.OK, MessageBoxImage.Information);
@@ -131,12 +132,12 @@ namespace DroneServiceApplication
 
             if (RegularServiceRB.IsChecked == true)
             {
-                _regularDroneQueue.Enqueue(newDrone);
+                _RegularService.Enqueue(newDrone);
                 RegularQueueLV.Items.Add(newDrone);
             }
             else if (ExpressServiceRB.IsChecked == true)
             {
-                _expressDroneQueue.Enqueue(newDrone);
+                _ExpressService.Enqueue(newDrone);
                 ExpressQueueLV.Items.Add(newDrone);
             }
 
@@ -203,6 +204,20 @@ namespace DroneServiceApplication
             _finishedList.RemoveAt(selectedIndex);
             FinishedServicesLB.Items.RemoveAt(selectedIndex);
             MessageBox.Show($"Drone with Service Tag {selectedDrone.ServiceTag} has been marked as completed.", "Drone Completed", MessageBoxButton.OK, MessageBoxImage.Information);
-        }        
+        }
+        
+        //Custom Method to handle only allowing 2 decimal point numbers and nothing else. Works alongside the event handler below.
+        private bool IsValidServiceCostInput(string currentText, string newInput)
+        {
+            string proposedText = currentText + newInput;
+            Regex pattern = new Regex(@"^\d*\.?\d{0,2}$");
+
+            return pattern.IsMatch(proposedText);
+        }
+
+        private void ServiceCostTB_PreviewTextInput(object sender, TextCompositionEventArgs e)
+        {
+            e.Handled = !IsValidServiceCostInput(ServiceCostTB.Text, e.Text);
+        }
     }
 }

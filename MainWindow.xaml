@@ -61,7 +61,8 @@
                 <TextBox x:Name="ServiceCostTB"
                  Height="25"
                  FontSize="16"
-                 Foreground="#FF989090"/>
+                 Foreground="#FF989090"
+                         PreviewTextInput="ServiceCostTB_PreviewTextInput"/>
 
                 <Label Content="Service Type"/>
 
