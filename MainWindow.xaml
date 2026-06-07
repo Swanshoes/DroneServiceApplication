@@ -119,7 +119,7 @@
 
                 <ListView x:Name="RegularQueueLV"
                   Height="170"
-                  Margin="0,0,0,8">
+                  Margin="0,0,0,8" SelectionChanged="RegularQueueLV_SelectionChanged">
                     <ListView.View>
                         <GridView>
                             <GridViewColumn Header="Tag"
@@ -158,7 +158,7 @@
 
                 <ListView x:Name="ExpressQueueLV"
                   Height="170"
-                  Margin="0,0,0,8">
+                  Margin="0,0,0,8" SelectionChanged="ExpressQueueLV_SelectionChanged">
                     <ListView.View>
                         <GridView>
                             <GridViewColumn Header="Tag"
@@ -210,6 +210,7 @@
                        FontWeight="Bold"/>
 
                 <ListBox x:Name="FinishedServicesLB"
+                         MouseDoubleClick="FinishedServicesLB_MouseDoubleClick"
                          Height="445"/>
 
                 <Button x:Name="MarkCompletedBTN"

@@ -146,6 +146,46 @@ namespace DroneServiceApplication
 
         private void MarkCompletedBTN_Click(object sender, RoutedEventArgs e)
         {
+            CompleteDroneService();
+        }
+
+        private void FinishedServicesLB_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            CompleteDroneService();
+        }
+
+        private void RegularQueueLV_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            ClearTextBoxes();
+
+            ExpressQueueLV.SelectedItem = null; // Deselect any item in the express queue list view
+
+            if (RegularQueueLV.SelectedItem is Drone selectedDrone)
+            {
+                ClientNameTB.Text = selectedDrone.ClientName;
+                DroneModelTB.Text = selectedDrone.DroneModel;
+                ServiceProblemTB.Text = selectedDrone.ServiceProblem;
+                ServiceCostTB.Text = selectedDrone.ServiceCost.ToString("F2");
+            }
+        }
+
+        private void ExpressQueueLV_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            ClearTextBoxes();
+
+            RegularQueueLV.SelectedItem = null; // Deselect any item in the regular queue list view
+
+            if (ExpressQueueLV.SelectedItem is Drone selectedDrone)
+            {
+                ClientNameTB.Text = selectedDrone.ClientName;
+                DroneModelTB.Text = selectedDrone.DroneModel;
+                ServiceProblemTB.Text = selectedDrone.ServiceProblem;
+                ServiceCostTB.Text = selectedDrone.ServiceCost.ToString("F2");
+            }
+        }
+
+        private void CompleteDroneService()
+        {
             if (_finishedList.Count == 0)
             {
                 MessageBox.Show("No completed services to mark.", "No Completed Services", MessageBoxButton.OK, MessageBoxImage.Information);
@@ -158,11 +198,11 @@ namespace DroneServiceApplication
                 return;
             }
 
-            int selectedIndex = FinishedServicesLB.SelectedIndex;   
+            int selectedIndex = FinishedServicesLB.SelectedIndex;
             Drone selectedDrone = _finishedList[selectedIndex];
             _finishedList.RemoveAt(selectedIndex);
             FinishedServicesLB.Items.RemoveAt(selectedIndex);
             MessageBox.Show($"Drone with Service Tag {selectedDrone.ServiceTag} has been marked as completed.", "Drone Completed", MessageBoxButton.OK, MessageBoxImage.Information);
-        }
+        }        
     }
 }
