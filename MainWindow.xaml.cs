@@ -13,20 +13,17 @@ using System.Windows.Shapes;
 
 namespace DroneServiceApplication
 {
-    /// <summary>
-    /// Interaction logic for MainWindow.xaml
-    /// </summary>
     public partial class MainWindow : Window
     {
         private int _currentServiceTag = 100; // Starting point for service tags
-        private Queue<Drone> _RegularService = new Queue<Drone>(); // Queue to hold the drone service requests
-        private Queue<Drone> _ExpressService = new Queue<Drone>(); // Queue to hold the drone service requests
-        private List<Drone> _finishedList = new List<Drone>(); // List to hold drones that are awaiting pickup
+        private Queue<Drone> _RegularService = new Queue<Drone>(); // 6.3 Queue to hold the drone service requests
+        private Queue<Drone> _ExpressService = new Queue<Drone>(); // 6.4 Queue to hold the drone service requests
+        private List<Drone> _finishedList = new List<Drone>(); // 6.2 List to hold drones that are awaiting pickup
         public MainWindow()
         {
             InitializeComponent();
         }
-
+        //6.11 Custom method to increment the service tag between 100 and 900 with increments of 10. Resets at 900.
         private void IncrementServiceTag()
         {
             if (_currentServiceTag < 900)
@@ -44,6 +41,7 @@ namespace DroneServiceApplication
             AddNewItem();
         }
 
+        //6.17 method to clear text boxes
         private void ClearTextBoxes()
         {
             ClientNameTB.Clear();
@@ -57,6 +55,7 @@ namespace DroneServiceApplication
             ClearTextBoxes();
         }
 
+        //6.14 MEthod to mark an item as completed and move it to the finished List
         private void DequeueRegularBTN_Click(object sender, RoutedEventArgs e)
         {
             if (_RegularService.Count == 0)
@@ -71,7 +70,8 @@ namespace DroneServiceApplication
             MessageBox.Show($"Drone with Service Tag {nextDrone.ServiceTag} has been moved to completed services.", "Drone Completed", MessageBoxButton.OK, MessageBoxImage.Information);
             FinishedServicesLB.Items.Add(nextDrone.Display());
         }
-
+        
+        //6.15 MEthod to mark an item as completed and move it to the finished List
         private void DequeueExpressBTN_Click(object sender, RoutedEventArgs e)
         {
             if (_ExpressService.Count == 0)
@@ -87,6 +87,7 @@ namespace DroneServiceApplication
             FinishedServicesLB.Items.Add(nextDrone.Display());
         }
 
+        //6.7
         // Returns the selected priority from the service priority radio buttons.
         private string GetServicePriority()
         {
@@ -100,6 +101,7 @@ namespace DroneServiceApplication
             }
         }
 
+        //6.5 Custom method to add a new drone service request to the appropriate queue based on the selected priority. Validates input and updates the UI accordingly.
         private void AddNewItem()
         {
             if (ClientNameTB.Text == "" || DroneModelTB.Text == "" || ServiceProblemTB.Text == "" || ServiceCostTB.Text == "")
@@ -150,11 +152,13 @@ namespace DroneServiceApplication
             CompleteDroneService();
         }
 
+        //6.16 Custom method to handle double-click event on the finished services list box to mark a service as completed and remove it from the list.
         private void FinishedServicesLB_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
             CompleteDroneService();
         }
 
+        //6.12 Custom method to show client details and drone service details in the text boxes.
         private void RegularQueueLV_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             ClearTextBoxes();
@@ -169,7 +173,7 @@ namespace DroneServiceApplication
                 ServiceCostTB.Text = selectedDrone.ServiceCost.ToString("F2");
             }
         }
-
+        //6.13 Custom method to show client details and drone service details in the text boxes.
         private void ExpressQueueLV_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             ClearTextBoxes();
@@ -206,7 +210,7 @@ namespace DroneServiceApplication
             MessageBox.Show($"Drone with Service Tag {selectedDrone.ServiceTag} has been marked as completed.", "Drone Completed", MessageBoxButton.OK, MessageBoxImage.Information);
         }
         
-        //Custom Method to handle only allowing 2 decimal point numbers and nothing else. Works alongside the event handler below.
+        //6.10 Custom Method to handle only allowing 2 decimal point numbers and nothing else. Works alongside the event handler below.
         private bool IsValidServiceCostInput(string currentText, string newInput)
         {
             string proposedText = currentText + newInput;
