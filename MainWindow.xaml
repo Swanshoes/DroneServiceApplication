@@ -13,7 +13,7 @@
     <Grid Background="#FFB7A7A7">
 
         <Label Content="Icarus Drone Servicing"
-               HorizontalAlignment="Center"
+               HorizontalAlignment="Left"
                VerticalAlignment="Top"
                Margin="0,15,0,0"
                FontSize="18"
@@ -62,7 +62,18 @@
                  Height="25"
                  FontSize="16"
                  Foreground="#FF989090"
-                         PreviewTextInput="ServiceCostTB_PreviewTextInput"/>
+                 PreviewTextInput="ServiceCostTB_PreviewTextInput"
+                 DataObject.Pasting="ServiceCostTB_Pasting"/>
+
+                <Label Content="Service Tag"/>
+
+                <TextBox x:Name="ServiceTagTB"
+                    Height="25"
+                    FontSize="16"
+                    IsReadOnly="True"
+                    Background="#FFE6E6E6"
+                    Foreground="Black"
+                    TextAlignment="Center"/>
 
                 <Label Content="Service Type"/>
 

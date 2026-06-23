@@ -22,6 +22,7 @@ namespace DroneServiceApplication
         public MainWindow()
         {
             InitializeComponent();
+            DisplayCurrentServiceTag();
         }
         //6.11 Custom method to increment the service tag between 100 and 900 with increments of 10. Resets at 900.
         private void IncrementServiceTag()
@@ -36,9 +37,15 @@ namespace DroneServiceApplication
             }
         }
 
+        private void DisplayCurrentServiceTag()
+        {
+            ServiceTagTB.Text = _currentServiceTag.ToString();
+        }
+
         private void AddToQueueBTN_Click(object sender, RoutedEventArgs e)
         {
             AddNewItem();
+            DisplayCurrentServiceTag();
         }
 
         //6.17 method to clear text boxes
@@ -48,11 +55,13 @@ namespace DroneServiceApplication
             DroneModelTB.Clear();
             ServiceProblemTB.Clear();
             ServiceCostTB.Clear();
+            ServiceTagTB.Clear();
         }
 
         private void ClearInputsBTN_Click(object sender, RoutedEventArgs e)
         {
             ClearTextBoxes();
+            DisplayCurrentServiceTag();
         }
 
         //6.14 MEthod to mark an item as completed and move it to the finished List
@@ -171,6 +180,7 @@ namespace DroneServiceApplication
                 DroneModelTB.Text = selectedDrone.DroneModel;
                 ServiceProblemTB.Text = selectedDrone.ServiceProblem;
                 ServiceCostTB.Text = selectedDrone.ServiceCost.ToString("F2");
+                ServiceTagTB.Text = selectedDrone.ServiceTag.ToString();
             }
         }
         //6.13 Custom method to show client details and drone service details in the text boxes.
@@ -186,6 +196,7 @@ namespace DroneServiceApplication
                 DroneModelTB.Text = selectedDrone.DroneModel;
                 ServiceProblemTB.Text = selectedDrone.ServiceProblem;
                 ServiceCostTB.Text = selectedDrone.ServiceCost.ToString("F2");
+                ServiceTagTB.Text = selectedDrone.ServiceTag.ToString();
             }
         }
 
@@ -222,6 +233,27 @@ namespace DroneServiceApplication
         private void ServiceCostTB_PreviewTextInput(object sender, TextCompositionEventArgs e)
         {
             e.Handled = !IsValidServiceCostInput(ServiceCostTB.Text, e.Text);
+        }
+
+        private void ServiceCostTB_Pasting(object sender, DataObjectPastingEventArgs e)
+        {
+            if (!e.DataObject.GetDataPresent(DataFormats.Text))
+            {
+                e.CancelCommand();
+                return;
+            }
+
+            string pastedText = e.DataObject.GetData(DataFormats.Text) as string ?? "";
+
+            TextBox textBox = (TextBox)sender;
+
+            string proposedText = textBox.Text.Remove(textBox.SelectionStart, textBox.SelectionLength).Insert(textBox.SelectionStart, pastedText);
+
+            if (!IsValidServiceCostInput("", proposedText))
+            {
+                e.CancelCommand();
+                MessageBox.Show("Invalid input: Please enter a valid service cost with up to 2 decimal places.");
+            }
         }
     }
 }
