@@ -252,7 +252,6 @@ namespace DroneServiceApplication
             if (!IsValidServiceCostInput("", proposedText))
             {
                 e.CancelCommand();
-                MessageBox.Show("Invalid input: Please enter a valid service cost with up to 2 decimal places.");
             }
         }
     }
